@@ -6,7 +6,7 @@ def label_captchas(labels_file):
     valid_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
     # Nhập thư mục chứa ảnh CAPTCHA
-    output_dir = "D:\\OU\\Captcha\\data"  # Chú ý dấu \ cần escape (\\) hoặc dùng dấu / thay vì \
+    output_dir = "D:\\OU\\Captcha\\READ_OU_CAPTCHA\\data"  # Chú ý dấu \ cần escape (\\) hoặc dùng dấu / thay vì \
 
     # Kiểm tra thư mục đầu ra có hợp lệ không
     if not os.path.isdir(output_dir):
