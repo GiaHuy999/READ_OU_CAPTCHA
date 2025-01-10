@@ -45,7 +45,7 @@ def train_model(X, y, num_classes=62):
 
 if __name__ == "__main__":
     processed_captchas_dir = "D:/OU/Captcha/data/processed"
-    labels_csv = "D:/OU/Captcha/data/labels.csv"
+    labels_csv = "D:/OU/Captcha/labels.csv"
 
    
     X, y = load_data(processed_captchas_dir, labels_csv)
