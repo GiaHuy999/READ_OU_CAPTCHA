@@ -14,17 +14,18 @@ def load_data(data_dir, labels_file):
     X, y = [], []
     for file_name, label in labels_dict.items():
         img = cv2.imread(os.path.join(data_dir, file_name), cv2.IMREAD_GRAYSCALE)
+        img = cv2.resize(img, (100, 40))
         img = img.reshape((40, 100, 1)) / 255.0 
         X.append(img)
         
-        y.append([ord(c) - ord('0') if c.isdigit() else ord(c) - ord('A') + 10 for c in label])
+        y.append([ord(c) - ord('0') if '0' <= c <= '9' else ord(c) - ord('A') + 10 for c in label])
 
     return np.array(X), np.array(y)
 
-
-def train_model(X, y, num_classes=62): 
-    y = [to_categorical(label, num_classes) for label in y]
-    y = np.array(y)
+def train_model(X, y):
+    num_classes = np.max(y) + 1
+    num_characters_per_captcha = y.shape[1]
+    y = np.array([to_categorical(label, num_classes).reshape(-1) for label in y])
 
     model = Sequential([
         Conv2D(32, (3, 3), activation='relu', input_shape=(40, 100, 1)),
@@ -35,19 +36,17 @@ def train_model(X, y, num_classes=62):
         Flatten(),
         Dense(128, activation='relu'),
         Dropout(0.5),
-        Dense(num_classes * len(y[0]), activation='softmax')
+        Dense(num_characters_per_captcha * num_classes, activation='softmax')
     ])
 
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     model.fit(X, y, epochs=10, batch_size=32, validation_split=0.2)
     return model
 
-
 if __name__ == "__main__":
-    processed_captchas_dir = "D:/OU/Captcha/data/processed"
-    labels_csv = "D:/OU/Captcha/labels.csv"
+    processed_captchas_dir = "./data"
+    labels_csv = "./labels.csv"
 
-   
     X, y = load_data(processed_captchas_dir, labels_csv)
     model = train_model(X, y)
 

@@ -31,7 +31,7 @@ def label_captchas(labels_file):
             if len(rows) > 1:
                 last_row = rows[-1]
                 last_file_name = last_row[0]
-                start_index = int(last_file_name.split('_')[1].split('.png')[0]) + 1
+                start_index = int(last_file_name.split('_')[1].split('.png')[0])
 
     with open(labels_file, 'a', newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -40,15 +40,13 @@ def label_captchas(labels_file):
 
         for i, file_name in enumerate(sorted(png_files, key=sort_key)):
             if i >= start_index:
-                print(f"Displaying: {file_name}")
                 
-                label = input(f"Enter the CAPTCHA label for {file_name}: ")
+                label = input(f"Enter label for {file_name}: ")
                 while not all(c in valid_characters for c in label):
                     print(f"Invalid label: {label}")
                     label = input("Enter the CAPTCHA label again: ")
 
                 writer.writerow([file_name, label])
-                print(f"Label for {file_name}: {label}")
 
 labels_file = 'labels.csv' 
 label_captchas(labels_file)
