@@ -29,7 +29,6 @@ def collect_and_preprocess_captchas(url, num_captchas, save_dir):
         captcha_data = requests.get(captcha_src).content
         img = cv2.imdecode(np.frombuffer(captcha_data, np.uint8), cv2.IMREAD_COLOR)
         
-        
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         file_path = os.path.join(save_dir, f'captcha_{i}.png')
