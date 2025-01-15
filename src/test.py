@@ -32,9 +32,11 @@ if __name__ == "__main__":
     num_classes = 62  
     num_characters_per_captcha = 4  
 
-    image_path = "data\\captcha_0002.png"  
+    image_path = "data\\captcha_0001.png"  
     X_new = process_image(image_path)
     prediction = model.predict(X_new)
     
     decoded_label = decode_prediction(prediction, num_classes, num_characters_per_captcha)
+    
+    print("nYhr")
     print(f"Predicted CAPTCHA text: {decoded_label}")
